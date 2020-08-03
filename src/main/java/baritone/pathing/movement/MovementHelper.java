@@ -122,10 +122,10 @@ public interface MovementHelper extends ActionCosts, Helper {
             // ok, it's low enough we could walk through it, but is it supported?
             return canWalkOn(bsi, x, y - 1, z);
         }
-        if (isFlowing(x, y, z, state, bsi)) {
+        FluidState fluidState = state.getFluidState();
+        if (!fluidState.isEmpty() && isFlowing(x, y, z, state, bsi)) {
             return false; // Don't walk through flowing liquids
         }
-        FluidState fluidState = state.getFluidState();
         if (fluidState.getFluid() instanceof WaterFluid) {
             if (Baritone.settings().assumeWalkOnWater.value) {
                 return false;
